@@ -1,0 +1,147 @@
+// server.js
+// import express from 'express';
+// import multer from 'multer';
+// import path from 'path';
+// import cors from "cors";
+// import dotenv from 'dotenv';
+// import { GoogleAIFileManager } from '@google/generative-ai/server';
+// import { GoogleGenerativeAI } from "@google/generative-ai";
+
+// // Load environment variables
+// dotenv.config();
+// const API_KEY = process.env.API_KEY || 'YOUR_GOOGLE_API_KEY';
+
+// if (!API_KEY) {
+//   console.error('Error: API_KEY not set in .env file.');
+//   process.exit(1);
+// }
+
+// // Initialize Express app
+// const app = express();
+// const port = 5000;
+// app.use(cors());
+
+// // Set up multer for file uploads
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, 'uploads/'); // Save uploaded files to the "uploads" folder
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, Date.now() + path.extname(file.originalname)); // Use current timestamp to avoid filename conflicts
+//   },
+// });
+
+// const upload = multer({ storage: storage });
+
+// // Endpoint to handle file upload
+// app.post('/upload', upload.single('file'), async (req, res) => {
+//   if (!req.file) {
+//     return res.status(400).json({ success: false, message: 'No file uploaded' });
+//   }
+
+//   try {
+//     // Dummy data simulating AI response
+//     const dummyResponse = {
+//       Customer: {
+//         GSTIN: "ABCDE1234567890",
+//         CustomerName: "John Doe",
+//         PhoneNumber: "9876543210",
+//         TotalAmount: 94782.67,
+//       },
+//       Products: [
+//         {
+//           ProductName: "iPHONE 16",
+//           Quantity: 1,
+//           Price: 79990,
+//           Discount: 5599.3,
+//           Amount: 69183.35,
+//         },
+//         {
+//           ProductName: "iPHONE 16 Cover",
+//           Quantity: 1,
+//           Price: 4599,
+//           Discount: 321.93,
+//           Amount: 3977.68,
+//         },
+//         {
+//           ProductName: "Beats PRO X",
+//           Quantity: 1,
+//           Price: 24999,
+//           Discount: 1749.93,
+//           Amount: 21621.64,
+//         },
+//       ],
+//       Invoice: {
+//         BillNo: "INV12345",
+//         CustomerName: "John Doe",
+//         TotalAmount: 94782.67,
+//         Date: "2024-11-23",
+//         IGST: "18%",
+//       },
+//       Seller: {
+//         Name: "TechStore Inc.",
+//         Address: "123 Tech Avenue, Cityville",
+//         Contact: "contact@techstore.com",
+//       },
+//     };
+
+//     /* Uncomment below when using the actual AI response
+
+//     // Initialize the Google API file manager
+//     const fileManager = new GoogleAIFileManager(API_KEY);
+
+//     // Upload the file to Google API
+//     const uploadResult = await fileManager.uploadFile(req.file.path, {
+//       mimeType: req.file.mimetype,
+//       displayName: req.file.originalname,
+//     });
+//     console.log(
+//       `Uploaded file ${uploadResult.file.displayName} as: ${uploadResult.file.uri}`
+//     );
+
+//     // Initialize the generative AI client
+//     const genAI = new GoogleGenerativeAI(API_KEY);
+
+//     // Fetch the generative model
+//     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+//     // Generate content based on the uploaded file
+//     const result = await model.generateContent([
+//       "Generate structured data in JSON format with the following fields: Customer, Invoice, Products, Seller...",
+//       {
+//         fileData: {
+//           fileUri: uploadResult.file.uri,
+//           mimeType: uploadResult.file.mimeType,
+//         },
+//       },
+//     ]);
+    
+//     let rawResponse = result.response.text();
+//     console.log("Raw AI Response:", rawResponse);
+
+//     // Sanitize the response
+//     rawResponse = rawResponse.replace(/```json/g, "").replace(/```/g, "").trim();
+
+//     // Parse JSON response
+//     const data = JSON.parse(rawResponse);
+
+//     */
+
+//     // Send the dummy response to the frontend
+//     res.json({
+//       success: true,
+//       customers: dummyResponse.Customer,
+//       products: dummyResponse.Products,
+//       invoices: dummyResponse.Invoice,
+//       seller: dummyResponse.Seller,
+//     });
+//   } catch (error) {
+//     console.error('Error uploading file to Google API:', error.message);
+//     res.status(500).json({ success: false, message: 'Failed to process file' });
+//   }
+// });
+
+// // Start the server
+// app.listen(port, () => {
+//   console.log(`Server running at http://localhost:${port}`);
+// });

@@ -1,0 +1,75 @@
+// import React, { useState } from 'react';
+// import { useDispatch } from 'react-redux';
+// import {  setCustomers } from '../redux/slices/customersSlice';
+// import {  setProducts } from '../redux/slices/productsSlice';
+// import { setInvoices } from '../redux/slices/invoiceSlice';
+// import { GoogleAIFileManager, GoogleGenerativeAI } from '@google/generative-ai/server';
+
+// const API_KEY = "YOUR_GOOGLE_API_KEY";  // Make sure to replace with your key
+
+// const FileUploader = () => {
+//   const [file, setFile] = useState(null);
+//   const dispatch = useDispatch();
+
+//   const fileManager = new GoogleAIFileManager(API_KEY);
+//   const genAI = new GoogleGenerativeAI(API_KEY);
+
+//   const handleFileUpload = async (e) => {
+//     const uploadedFile = e.target.files[0];
+//     setFile(uploadedFile);
+    
+//     const uploadResponse = await fileManager.uploadFile(uploadedFile.path, {
+//       mimeType: uploadedFile.type,
+//       displayName: uploadedFile.name,
+//     });
+
+//     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+//     const result = await model.generateContent([
+//       {
+//         fileData: {
+//           mimeType: uploadResponse.file.mimeType,
+//           fileUri: uploadResponse.file.uri,
+//         },
+//       },
+//       { text: "Can you summarize this document as a bulleted list?" },
+//     ]);
+
+//     const extractedData = result.response.text();  // Extracted data from the document
+
+//     // Simulated data processing
+//     const invoices = processInvoices(extractedData);
+//     const products = processProducts(extractedData);
+//     const customers = processCustomers(extractedData);
+
+//     dispatch(setInvoices(invoices));
+//     dispatch(setProducts(products));
+//     dispatch(setCustomers(customers));
+//   };
+
+//   const processInvoices = (data) => {
+//     return [
+//       { serialNumber: "12345", customerName: "John Doe", totalAmount: 1050, date: "2024-11-22" }
+//     ];
+//   };
+
+//   const processProducts = (data) => {
+//     return [
+//       { name: "Laptop", quantity: 1, unitPrice: 1000, priceWithTax: 1050 }
+//     ];
+//   };
+
+//   const processCustomers = (data) => {
+//     return [
+//       { customerName: "John Doe", phoneNumber: "123-456-7890", totalPurchaseAmount: 1050 }
+//     ];
+//   };
+
+//   return (
+//     <div>
+//       <input type="file" onChange={handleFileUpload} />
+//       {file && <p>Uploaded: {file.name}</p>}
+//     </div>
+//   );
+// };
+
+// export default FileUploader;
